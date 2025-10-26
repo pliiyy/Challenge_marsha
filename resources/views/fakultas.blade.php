@@ -6,11 +6,10 @@
         /* Variabel warna berdasarkan tema umum */
         :root {
             --primary-color: #0d6efd;
-            /* Warna Biru Utama Bootstrap */
+            /* Biru Utama Bootstrap */
             --primary-dark: #0a58ca;
             --secondary-color: #6c757d;
             --success-color: #198754;
-            --warning-color: #ffc107;
         }
 
         /* Gaya Card Utama */
@@ -20,10 +19,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
-        /* Gaya Header Card yang Modern */
+        /* Gaya Header Card Utama yang Modern */
         .main-card .card-header {
             background-color: #f8f9fa;
-            /* Latar belakang abu muda */
             border-bottom: 1px solid #dee2e6;
             padding: 1.5rem 1.5rem;
             border-top-left-radius: 12px;
@@ -45,21 +43,47 @@
         }
 
         /* Gaya Tabel */
-        .table {
-            margin-bottom: 0;
-        }
-
         .table thead th {
             font-weight: 600;
             color: var(--secondary-color);
             background-color: #e9ecef;
-            /* Header tabel abu-abu gelap */
             border-bottom: 2px solid #dee2e6;
             vertical-align: middle;
         }
 
         .table-hover tbody tr:hover {
-            background-color: #f1f1f1;
+            background-color: #f8f9fa;
+        }
+
+        /* Gaya Umum Modal (BARU) */
+        .modal-content {
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Gaya Header Modal (BARU) */
+        .modal-header-custom {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: white;
+        }
+
+        .modal-header-primary {
+            background-color: var(--primary-dark);
+        }
+
+        .modal-header-danger {
+            background-color: #dc3545;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            /* Membuat ikon putih */
         }
     </style>
 
@@ -133,16 +157,15 @@
                                     <td>
                                         @if ($kls->status == 'AKTIF')
                                             <span
-                                                class="badge rounded-pill bg-success-subtle text-success fw-bold">{{ ucfirst(strtolower($kls->status)) }}</span>
+                                                class="badge rounded-pill bg-success-subtle text-success fw-bold">Aktif</span>
                                         @else
                                             <span
-                                                class="badge rounded-pill bg-danger-subtle text-danger fw-bold">{{ ucfirst(strtolower($kls->status)) }}</span>
+                                                class="badge rounded-pill bg-danger-subtle text-danger fw-bold">Nonaktif</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="btn-group btn-action-group">
                                             @if (auth()->user()->dekan || auth()->user()->kaprodi || auth()->user()->sekprodi)
-                                                {{-- Tombol Edit: Memicu modal dan mengirim data role ke fungsi JS/data attributes (FUNGSI TETAP SAMA) --}}
                                                 <button type="button" class="btn btn-outline-primary btn-sm btn-edit"
                                                     data-bs-toggle="modal" data-bs-target="#editRoleModal"
                                                     data-id="{{ $kls->id }}" data-nama="{{ $kls->nama }}"
@@ -150,7 +173,6 @@
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
 
-                                                {{-- Tombol Delete: Memicu modal konfirmasi hapus (FUNGSI TETAP SAMA) --}}
                                                 <button type="button" class="btn btn-outline-danger btn-sm btn-delete"
                                                     data-bs-toggle="modal" data-bs-target="#deleteRoleModal"
                                                     data-id="{{ $kls->id }}" data-nama="{{ $kls->nama }}">
@@ -174,27 +196,31 @@
         {{ $fakultas->links() }}
     </div>
 
-    {{-- MODAL TAMBAH FAKULTAS (TIDAK BERUBAH) --}}
+    {{-- ================================================================================= --}}
+    {{-- MODAL TAMBAH FAKULTAS (TAMPILAN BARU) --}}
+    {{-- ================================================================================= --}}
     <div class="modal fade" id="addKelasModal" tabindex="-1" aria-labelledby="addKelasModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="modal-content" action="/fakultas" method="POST">
                 @csrf
                 @method('post')
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addKelasModalLabel">Tambah Fakultas Baru</h5>
+                <div class="modal-header modal-header-custom modal-header-primary">
+                    <h5 class="modal-title" id="addKelasModalLabel"><i class="bi bi-plus-circle me-2"></i>Tambah Fakultas
+                        Baru</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <div class="mb-3">
-                        <label class="form-label">Nama Fakultas</label>
-                        <input type="text" class="form-control" placeholder="Contoh: Komputer" name="nama">
+                        <label class="form-label fw-semibold">Nama Fakultas</label>
+                        <input type="text" class="form-control" placeholder="Contoh: Fakultas Ilmu Komputer"
+                            name="nama" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Kode</label>
-                        <input class="form-control" placeholder="Contoh: FKOM" name="kode">
+                        <label class="form-label fw-semibold">Kode Fakultas</label>
+                        <input class="form-control" placeholder="Contoh: FKOM" name="kode" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Dekan</label>
+                        <label class="form-label fw-semibold">Dekan Penanggung Jawab</label>
                         <select class="form-select" name="dekan_id">
                             <option value="">-- Pilih Dekan --</option>
                             @foreach ($dekan as $index => $kls)
@@ -205,37 +231,40 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan Fakultas</button>
+                    <button type="submit" class="btn btn-primary fw-semibold"><i class="bi bi-save me-1"></i>
+                        Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    {{-- MODAL EDIT FAKULTAS (TIDAK BERUBAH) --}}
+    {{-- ================================================================================= --}}
+    {{-- MODAL EDIT FAKULTAS (TAMPILAN BARU) --}}
+    {{-- ================================================================================= --}}
     <div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form class="modal-content" id="editRoleForm" action="" method="POST">
                 @csrf
                 @method('PUT')
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="editRoleModalLabel">Edit Fakultas: <span id="edit-role-name"
-                            class="fw-bold"></span></h5>
+                <div class="modal-header modal-header-custom modal-header-primary">
+                    <h5 class="modal-title" id="editRoleModalLabel"><i class="bi bi-pencil-square me-2"></i>Edit
+                        Fakultas: <span id="edit-role-name" class="fw-bold"></span></h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <input type="hidden" name="id" id="edit-id">
 
                     <div class="mb-3">
-                        <label for="edit-nama" class="form-label">Nama Fakultas</label>
+                        <label for="edit-nama" class="form-label fw-semibold">Nama Fakultas</label>
                         <input type="text" class="form-control" id="edit-nama" name="nama" required />
                     </div>
                     <div class="mb-3">
-                        <label for="edit-kode" class="form-label">Kode</label>
+                        <label for="edit-kode" class="form-label fw-semibold">Kode Fakultas</label>
                         <input class="form-control" id="edit-kode" name="kode">
                     </div>
                     <div class="mb-3">
-                        <label for="edit-dekan_id" class="form-label">Dekan</label>
+                        <label for="edit-dekan_id" class="form-label fw-semibold">Dekan Penanggung Jawab</label>
                         <select class="form-select" name="dekan_id" id="edit-dekan_id">
                             <option value="">-- Pilih Dekan --</option>
                             @foreach ($dekan as $index => $kls)
@@ -246,39 +275,44 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <button type="submit" class="btn btn-primary fw-semibold"><i class="bi bi-arrow-up-circle me-1"></i>
+                        Update Perubahan</button>
                 </div>
             </form>
         </div>
     </div>
 
 
-    {{-- MODAL HAPUS FAKULTAS (TIDAK BERUBAH) --}}
+    {{-- ================================================================================= --}}
+    {{-- MODAL HAPUS FAKULTAS (TAMPILAN BARU) --}}
+    {{-- ================================================================================= --}}
     <div class="modal fade" id="deleteRoleModal" tabindex="-1" aria-labelledby="deleteRoleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <form class="modal-content" id="deleteRoleForm" action="/fakultas" method="POST">
                 @csrf
                 @method('DELETE')
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="deleteRoleModalLabel">Konfirmasi Hapus</h5>
+                <div class="modal-header modal-header-custom modal-header-danger">
+                    <h5 class="modal-title" id="deleteRoleModalLabel"><i
+                            class="bi bi-exclamation-triangle-fill me-2"></i>Konfirmasi Hapus</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus Fakultas **<span id="delete-role-name" class="fw-bold"></span>**?
-                    </p>
+                <div class="modal-body text-center p-4">
+                    <p>Apakah Anda yakin ingin menghapus Fakultas **<span id="delete-role-name" class="fw-bold"></span>**
+                        secara permanen?</p>
                     <input type="hidden" name="id" id="delete-id">
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Ya, Hapus Fakultas Ini</button>
+                    <button type="submit" class="btn btn-danger fw-semibold"><i class="bi bi-trash me-1"></i> Ya,
+                        Hapus</button>
                 </div>
             </form>
         </div>
     </div>
 
-    {{-- SCRIPT JAVASCRIPT (TIDAK BERUBAH) --}}
+    {{-- SCRIPT JAVASCRIPT (TIDAK BERUBAH FUNGSINYA) --}}
     <script>
         $(document).ready(function() {
             // Logika untuk Modal Edit

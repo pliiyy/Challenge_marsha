@@ -265,9 +265,7 @@
                 </form>
             </div>
 
-            <div class="col-lg-10 col-md-9">
-                @yield('content')
-            </div>
+            @yield('content')
         </div>
     </div>
 

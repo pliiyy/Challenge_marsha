@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarterJadwal;
+use App\Models\Fakultas;
 use App\Models\Jadwal;
 use App\Models\PindahJadwal;
+use App\Models\Prodi;
 use App\Models\SuratTugasMengajar;
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
@@ -109,14 +111,17 @@ class User extends Controller
 
         return redirect('/settings')->with('success', 'Pengguna ' . $user->Biodata->nama . ' berhasil diperbarui!');
     }
+
     public function dashboard(){
         $user = ModelsUser::where("status","AKTIF")->count();
         $surat = SuratTugasMengajar::count();
         $pindah = PindahJadwal::count();
         $barter = BarterJadwal::count();
+        $fakultas = Fakultas::count();
+        $prodi = Prodi::count();
         $total = $surat+$pindah+$barter;
 
-        return view('dashboard',compact('user','total'));
+        return view('dashboard',compact('user','total','fakultas','prodi'));
     
     }
     // ProfilController.php

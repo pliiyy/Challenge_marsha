@@ -343,14 +343,13 @@
                             class="form-select @error('jenis_kelamin') is-invalid @enderror">
                             <option value="">-- Pilih JK --</option>
                             <option value="L">Laki - Laki</option>
-
+                            <option value="P">Perempuan</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="edit-agama" class="form-label">Agama</label>
                         <select name="agama" id="edit-agama" class="form-select @error('agama') is-invalid @enderror">
                             <option value="">-- Pilih Agama --</option>
-                            <option value="P">Perempuan</option>
                             <option value="ISLAM">ISLAM</option>
                             <option value="HINDU">HINDU</option>
                             <option value="BUDHA">BUDHA</option>
@@ -594,7 +593,7 @@
 
                 // 3. Atur action form
                 // Ganti '/role/' dengan URL route Anda yang benar, misal '/roles' atau sejenisnya
-                $('#editRoleForm').attr('action', '/dekan/' + id);
+                $('#editRoleForm').attr('action', '/dosen/' + id);
 
             });
             $('.btn-delete').on('click', function() {
@@ -607,7 +606,7 @@
 
                 // Atur action form
                 // Ganti '/role/' dengan URL route Anda yang benar, misal '/roles' atau sejenisnya
-                $('#deleteRoleForm').attr('action', '/dekan/' + id);
+                $('#deleteRoleForm').attr('action', '/dosen/' + id);
             });
         });
     </script>

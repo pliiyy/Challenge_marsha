@@ -84,7 +84,6 @@ class DekanController extends Controller
                 Rule::requiredIf(is_null($request->user_id)), // Wajib jika membuat baru
                 'string', 
                 'max:15',
-                'unique:user,no_telepon'
             ],
             'jenis_kelamin' => [
                 Rule::requiredIf(is_null($request->user_id)), // Wajib jika membuat baru
@@ -215,7 +214,7 @@ class DekanController extends Controller
         'user_name' => ['string', 'max:255'],
         'username' => ['string', 'max:255','unique:user,username,'.$dekan->User->id],
         'user_email' => ['email', 'unique:user,email,'.$dekan->User->id],
-        'no_telepon' => ['string', 'max:15','unique:user,no_telepon,'.$dekan->User->id],
+        'no_telepon' => ['string', 'max:15'],
         'jenis_kelamin' => ['string', 'max:1'],
         'agama' => ['string'],
         'tempat_lahir' => ['string'],

@@ -57,7 +57,7 @@ class DosenController extends Controller
                 'nullable', 
                 Rule::exists('user', 'id'),
             ],
-            'nidn' => ['required','string', 'unique:dekan,nidn'],
+            'nidn' => ['required','string', 'unique:dosen,nidn'],
             'user_name' => [
                 Rule::requiredIf(is_null($request->user_id)), // Wajib jika user_id kosong
                 'string', 

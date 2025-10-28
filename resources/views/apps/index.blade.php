@@ -185,7 +185,7 @@
         </script>
     @endif
 
-    <nav class="navbar navbar-dark">
+    {{-- <nav class="navbar navbar-dark">
         <div class="container-fluid px-4">
             <span class="navbar-brand fw-bold">MARSHA APP</span>
             <div class="d-flex align-items-center gap-3 text-white small">
@@ -195,7 +195,41 @@
                 </a>
             </div>
         </div>
+    </nav> --}}
+    {{-- NAV BAR BARU (TATA LETAK BERBEDA) --}}
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            {{-- Kelompok Kiri: Brand & Profil (Pindah ke Kiri) --}}
+            <div class="d-flex align-items-center gap-3">
+                <span class="navbar-brand fw-bold">MARSHA <span class="text-primary-color">APP</span></span>
+            </div>
+
+            {{-- Kelompok Kanan: Notifikasi dan Info User (Pindah ke Kanan) --}}
+            <div class="d-flex align-items-center gap-3 user-info-area">
+                {{-- Notifikasi (Ikon Fiktif) --}}
+                <button class="btn btn-sm btn-light position-relative d-none d-md-block">
+                    <i class="bi bi-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ $total??"0" }}
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                </button>
+
+                {{-- Hanya Tampilkan Nama di Kanan --}}
+                <span class="d-none d-md-inline small text-dark">
+                    <i class="bi bi-person-circle me-1"></i> {{ auth()->user()->biodata->nama ?? 'Admin' }}
+                </span>
+
+                {{-- Hamburger/Offcanvas Toggle (Opsional jika ingin menu mobile) --}}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
     </nav>
+    {{-- AKHIR NAV BAR BARU --}}
 
     <div class="container-fluid">
         <div class="row">
@@ -254,6 +288,9 @@
                     <a href="/data" class="nav-link">
                         <i class="bi bi-people-fill me-2"></i> Data Pengguna
                     </a>
+                    <a href="profil" class="nav-link profile-link d-none d-sm-flex">
+                    <i class="bi bi-person me-1"></i> Profil
+                </a>
                     <a href="/settings" class="nav-link">
                         <i class="bi bi-gear me-2"></i> Pengaturan Aplikasi
                     </a>

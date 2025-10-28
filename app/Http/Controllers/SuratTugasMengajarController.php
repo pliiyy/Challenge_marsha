@@ -97,13 +97,13 @@ class SuratTugasMengajarController extends Controller
             'status' => 'required',
         ]);
 
-        if($validated['status'] !== "PENDING"){
-            $user = User::where("id",$surat->dosen->user_id)->first();
-            $statuss = $validated['status'] === "APPROVE"?"Telah Disetujui":"Telah Ditolak";
-            $rejectMsg = "Mohon maaf surat tugas mengajar kamu dalam kelas ".$surat->kelas->nama ." telah ditolak. Mohon ajukan kembali nanti.";
-            $approvMsg = "Selamat!!. surat tugas mengajar kamu dalam kelas ".$surat->kelas->nama ." telah disetujui. Silahkan buat jadwal dalam matakuliah ".$surat->Matakuliah->nama;
-             $user->notify(new NotifEmail('Surat Tugas Mengajar '.$statuss, $validated['status'] === "APPROVED"?$approvMsg: $rejectMsg));
-        }
+        // if($validated['status'] !== "PENDING"){
+            // $user = User::where("id",$surat->dosen->user_id)->first();
+            // $statuss = $validated['status'] === "APPROVE"?"Telah Disetujui":"Telah Ditolak";
+            // $rejectMsg = "Mohon maaf surat tugas mengajar kamu dalam kelas ".$surat->kelas->nama ." telah ditolak. Mohon ajukan kembali nanti.";
+            // $approvMsg = "Selamat!!. surat tugas mengajar kamu dalam kelas ".$surat->kelas->nama ." telah disetujui. Silahkan buat jadwal dalam matakuliah ".$surat->Matakuliah->nama;
+            //  $user->notify(new NotifEmail('Surat Tugas Mengajar '.$statuss, $validated['status'] === "APPROVED"?$approvMsg: $rejectMsg));
+        // }
     
         $surat->update($validated);
 

@@ -594,7 +594,7 @@
 
                 // 3. Atur action form
                 // Ganti '/role/' dengan URL route Anda yang benar, misal '/roles' atau sejenisnya
-                $('#editRoleForm').attr('action', '/dekan/' + id);
+                $('#editRoleForm').attr('action', '/dosen/' + id);
 
             });
             $('.btn-delete').on('click', function() {
@@ -607,7 +607,7 @@
 
                 // Atur action form
                 // Ganti '/role/' dengan URL route Anda yang benar, misal '/roles' atau sejenisnya
-                $('#deleteRoleForm').attr('action', '/dekan/' + id);
+                $('#deleteRoleForm').attr('action', '/dosen/' + id);
             });
         });
     </script>
